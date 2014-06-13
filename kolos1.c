@@ -12,8 +12,8 @@ int main() {
 		a[i] = 0;
 	}
 
-	printf( "Liczb: %ld \n", digits_count(tekst, a, &mostOften));
-	printf("Najczestsza: %ld \n", mostOften);
+	printf( "Number of digits occurances: %ld \n", digits_count(tekst, a, &mostOften));
+	printf("Most common digit: %ld \n", mostOften);
 	for (i = 0; i < 10; i++) {
 		printf("%d %ld\n", i, a[i]);
 	}
