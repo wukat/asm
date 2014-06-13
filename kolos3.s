@@ -4,7 +4,7 @@
 # 	h - list of numbers
 #	n - length of h
 #	hs - list of result numbers (hs(i) = sum_j=0,j<=i_h(j)) 
-#	normalize - flag if hs should be normalized (biggest - 1)
+#	normalize - flag if hs should be normalized (biggest -> 100)
 # 	returns sum of all numbers
 
 	.data
@@ -26,24 +26,19 @@ histo_sum:
 	movl	16(%ebp), %ebx	# hs in ebx
 	movl	12(%ebp), %ecx 	# loop counter
 
-outer:								# loop over hs  (9, 8, ...,1), 0 out of loop
-	movl	(%eax, %ecx, 4), %edx
+outer:								# loop over hs  (9, 8, ...,1, 0)
+	movl	-4(%eax, %ecx, 4), %edx
 	addl	%edx, -4(%ebp)			# add h(i) to sum
 	movl	%ecx, %esi 				# index to esi - i
 	pushl	%ecx					# ecx to stack, to remember outer loop counter
+	incl	%ecx
 inner:	
-	movl	(%eax, %ecx, 4), %edx 
-	addl	%edx, (%ebx, %esi, 4) 	# sum up from (i to 1), 0 out of loop
+	movl	-4(%eax, %ecx, 4), %edx 
+	addl	%edx, (%ebx, %esi, 4) 	# sum up from (i to 0)
 	loop	inner
 
-	movl	(%eax, %ecx, 4), %edx 	# 0 indexed elements
-	addl	%edx, (%ebx, %esi, 4)
 	popl 	%ecx					# outer counter from stack
 	loop 	outer
-
-	movl	(%eax, %ecx, 4), %edx 	# 0 indexed elements
-	movl	%edx, (%ebx, %ecx, 4)
-	addl 	%edx, -4(%ebp)			# add h(0) to sum
 
 	cmpl	$1, 20(%ebp)			# check normalization
 	jne		finish

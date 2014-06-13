@@ -43,7 +43,7 @@ check:
 	incl	%ebx
 	testb	%al, %al 					# test if end of string
 	jz 		finish
-	cmpb	$'0', %al 					#check if digit
+	cmpb	$'0', %al 					# check if digit
 	jb		before
 	cmpb	$'9', %al
 	jg		before
@@ -51,11 +51,11 @@ check:
 	addl	$1, (%ecx,%eax,4) 			# increment counter
 	pushl	%ebx
 	movl 	-4(%ebp), %ebx 
-	cmpl	(%ecx,%eax,4), %ebx			#comparing counts
+	cmpl	(%ecx,%eax,4), %ebx			# comparing counts
 	jg		go
 	movl	(%ecx,%eax,4), %ebx
 	movl	%ebx, -4(%ebp) 				# actualize max
-	movl	%eax, (%edx)				#change most often digit
+	movl	%eax, (%edx)				# change most often digit
 go:
 	popl	%ebx
 	popl	%eax 
