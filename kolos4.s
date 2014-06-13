@@ -7,8 +7,6 @@
 # 	returns average of all numbers
 
 	.data
-	form:
-	.asciz "%ld \n"
 
 	.text
 	.type reverse_tab_arg, @function
