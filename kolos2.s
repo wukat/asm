@@ -1,9 +1,9 @@
 # Kasperek Wojciech
 
-# extern char * order_of(long a, long b, long c, long d);
+# 	extern char * order_of(long a, long b, long c, long d);
 #
-# a,b,c,d - for longs, unordered
-# returns string of indexes (sorted by order of a,b,c,d - descending)
+# 	a,b,c,d - for longs, unordered
+# 	returns string of indexes (sorted by order of a,b,c,d - descending)
 
 	.data
 str:
