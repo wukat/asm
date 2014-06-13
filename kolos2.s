@@ -11,8 +11,6 @@ str:
 table:					
 	.long	0,0,0,0
 
-events:	
-	.long	0
 
 	.text
 	.type order_of, @function
@@ -26,40 +24,38 @@ order_of:
 	# 12(%ebp) -> b
 	# 16(%ebp) -> c
 	# 20(%ebp) -> d
-	MOVL 	$0, %esi
-	MOVL 	8(%ebp), %eax
-	MOVL 	%eax, table(,%esi,4)
-	INCL	%esi
-	MOVL 	12(%ebp), %eax
-	MOVL 	%eax, table(,%esi,4)
-	INCL	%esi
-	MOVL 	16(%ebp), %eax
-	MOVL 	%eax, table(,%esi,4)
-	INCL	%esi
-	MOVL 	20(%ebp), %eax
-	MOVL 	%eax, table(,%esi,4)
+	movl 	$0, %esi
+	movl 	8(%ebp), %eax
+	movl 	%eax, table(,%esi,4)
+	incl	%esi
+	movl 	12(%ebp), %eax
+	movl 	%eax, table(,%esi,4)
+	incl	%esi
+	movl 	16(%ebp), %eax
+	movl 	%eax, table(,%esi,4)
+	incl	%esi
+	movl 	20(%ebp), %eax
+	movl 	%eax, table(,%esi,4)
 
-	MOVL	$4,%edx
-	MOVL	$0,events
+	movl	$4,%edx
 outer:		
-	DEC		%edx
-	XOR		%esi,%esi
-	MOV		%edx,%ecx
+	dec		%edx
+	xor		%esi,%esi
+	movl	%edx,%ecx # ecx as counter (loop below)
 inner:		
-	MOVL	table(,%esi,4),%eax
-	MOVB	str(,%esi,1),%bl
-	CMPL	table+4(,%esi,4),%eax
-	JAE		noswap
-	XCHGL	table+4(,%esi,4),%eax
-	XCHGB	str+1(,%esi,1),%bl
-	MOVL	%eax,table(,%esi,4)
-	MOVB 	%bl,str(,%esi,1)
-	INCL	events
+	movl	table(,%esi,4),%eax
+	movb	str(,%esi,1),%bl
+	cmpl	table+4(,%esi,4),%eax
+	jae		noswap
+	xchgl	table+4(,%esi,4),%eax
+	xchgb	str+1(,%esi,1),%bl
+	movl	%eax,table(,%esi,4)
+	movb 	%bl,str(,%esi,1)
 noswap:		
-	INC		%esi
-	LOOP	inner
-	CMPL	$1,%edx
-	JNZ		outer
+	inc		%esi
+	loop	inner
+	cmpl	$1,%edx
+	jnz		outer
 
 finish:
 	movl $str, %eax
