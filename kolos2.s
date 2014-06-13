@@ -1,4 +1,4 @@
-# Kasperek Wojciech
+# Kasperek Wojciech (wukat)
 
 # 	extern char * order_of(long a, long b, long c, long d);
 #
@@ -20,6 +20,18 @@ table:
 order_of:
 	pushl %ebp
 	movl %esp, %ebp
+
+	# cleaning up -> setting global variables to initial values (needed, if you use function 2nd time)
+	movl	$0, %eax
+	movl	$'1', str(,%eax,1)
+	incl	%eax
+	movl	$'2', str(,%eax,1)
+	incl	%eax
+	movl	$'3', str(,%eax,1)
+	incl	%eax
+	movl	$'4', str(,%eax,1)
+
+	# table doesn't need to be initialized
 
 	# 8(%ebp) -> a
 	# 12(%ebp) -> b

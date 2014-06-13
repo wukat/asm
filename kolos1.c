@@ -1,4 +1,4 @@
-/* Kasperek Wojciech */
+/* Kasperek Wojciech (wukat) */
 
 #include <stdio.h>
 extern long digits_count(char *buf, long *digits, long *max_digit);

@@ -1,4 +1,4 @@
-# Kasperek Wojciech
+# Kasperek Wojciech (wukat)
 
 #	long digits_count(char *buf, long *digits, long *max_digit)
 # 	buf - string
@@ -7,7 +7,7 @@
 # 	returns number of occurences of all digits together
 
 	.data
-count_most_often:						# actual max counter of occurances one of digits
+count_most_often:						
 	.long 	0
 
 	.text
@@ -17,6 +17,8 @@ count_most_often:						# actual max counter of occurances one of digits
 digits_count:
 	pushl 	%ebp
 	movl 	%esp, %ebp
+	subl	$4, %esp					
+	movl	$0, -4(%ebp)				# actual max counter of occurances one of digits
 
 	#8(%ebp) <- buf
 	#12(%ebp) <- digits
@@ -48,11 +50,11 @@ check:
 	subb	$'0', %al 					# make number from digit
 	addl	$1, (%ecx,%eax,4) 			# increment counter
 	pushl	%ebx
-	movl 	count_most_often, %ebx 
+	movl 	-4(%ebp), %ebx 
 	cmpl	(%ecx,%eax,4), %ebx			#comparing counts
 	jg		go
 	movl	(%ecx,%eax,4), %ebx
-	movl	%ebx, count_most_often 		# actualize max
+	movl	%ebx, -4(%ebp) 				# actualize max
 	movl	%eax, (%edx)				#change most often digit
 go:
 	popl	%ebx
@@ -62,6 +64,7 @@ go:
 	
 finish:
 	popl 	%eax 
+	addl 	$4, %esp
 	movl 	%ebp, %esp
 	popl 	%ebp
 	ret

@@ -1,4 +1,4 @@
-/* Kasperek Wojciech */
+/* Kasperek Wojciech (wukat) */
 
 #include <stdio.h>
 extern char * order_of(long a, long b, long c, long d);
